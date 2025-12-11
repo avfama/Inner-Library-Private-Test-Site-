@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Viewport meta tag ensures proper scaling on mobile devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyberpunk Profile</title>
+    <style>
+        /* ===== RESET & BASE STYLES ===== */
+        /* Remove default browser spacing and set consistent box-sizing */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* Cyberpunk font stack with fallbacks */
+            font-family: 'Courier New', monospace;
+            /* Dark cyberpunk background with grid pattern effect */
+            background: #0a0e27;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            min-height: 100vh;
+            padding: 20px;
+            color: #00ffff;
+        }
+
+        /* ===== MAIN CONTAINER ===== */
+        /* Centers content and limits max width for readability */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ===== PROFILE CARD ===== */
+        /* Main card container with cyberpunk styling */
+        .profile-card {
+            background: rgba(10, 14, 39, 0.9);
+            border-radius: 0;
+            /* Neon cyan border effect */
+            border: 2px solid #00ffff;
+            box-shadow: 
+                0 0 20px rgba(0, 255, 255, 0.5),
+                inset 0 0 20px rgba(0, 255, 255, 0.1);
+            overflow: hidden;
+            /* Glitch animation on the border */
+            position: relative;
+        }
+
+        /* Animated corner accents */
+        .profile-card::before,
+        .profile-card::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ff00ff;
+            z-index: 1;
+        }
+
+        .profile-card::before {
+            top: 10px;
+            left: 10px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .profile-card::after {
+            bottom: 10px;
+            right: 10px;
+            border-left: none;
+            border-top: none;
+        }
+
+        /* ===== HEADER SECTION ===== */
+        /* Flexbox container for profile image and text */
+        .header {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(255, 0, 255, 0.1) 100%);
+            padding: 40px;
+            /* Neon pink border bottom */
+            border-bottom: 2px solid #ff00ff;
+            /* Flexbox: arrange items vertically by default (mobile-first) */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated scanline effect */
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ffff, transparent);
+            animation: scan 3s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { left: -100%; top: 0; }
+            50% { left: 100%; top: 50%; }
+            100% { left: -100%; top: 100%; }
+        }
+
+        /* ===== PROFILE IMAGE ===== */
+        /* Circular profile image with neon glow */
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            /* Multiple neon borders for cyberpunk effect */
+            border: 3px solid #00ffff;
+            box-shadow: 
+                0 0 20px #00ffff,
+                0 0 40px #00ffff,
+                inset 0 0 20px rgba(0, 255, 255, 0.2);
+            background: rgba(10, 14, 39, 0.8);
+            /* Flexbox to center the initials */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            font-weight: bold;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Header text styling */
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 5px;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff;
+        }
+
+        /* ===== CONTENT SECTION ===== */
+        .content {
+            padding: 40px;
+            position: relative;
+        }
+
+        /* Individual content sections */
+        .section {
+            margin-bottom: 40px;
+        }
+
+        /* Section headings with neon underline */
+        .section h2 {
+            color: #00ffff;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            border-bottom: 2px solid #ff00ff;
+            padding-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px #00ffff;
+            position: relative;
+        }
+
+        /* Glowing accent on section headers */
+        .section h2::after {
+            content: '//';
+            position: absolute;
+            right: 0;
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff;
+        }
+
+        /* ===== SKILLS GRID ===== */
+        /* Flexbox grid that wraps skill tags */
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap; /* Allows items to wrap to next line */
+            gap: 15px; /* Space between items */
+        }
+
+        /* Individual skill tags with neon effect */
+        .skill-tag {
+            background: rgba(0, 255, 255, 0.1);
+            color: #00ffff;
+            padding: 10px 20px;
+            border: 1px solid #00ffff;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+
+        /* Hover effect: enhanced glow and lift */
+        .skill-tag:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+            background: rgba(0, 255, 255, 0.2);
+        }
+
+        /* ===== INFO GRID ===== */
+        /* Flexible grid for experience/info cards */
+        .info-grid {
+            display: flex;
+            flex-wrap: wrap; /* Wraps items on smaller screens */
+            gap: 20px;
+        }
+
+        /* Individual info cards */
+        .info-item {
+            flex: 1; /* Grows to fill available space */
+            min-width: 250px; /* Minimum width before wrapping */
+            background: rgba(0, 255, 255, 0.05);
+            padding: 20px;
+            border: 1px solid #00ffff;
+            border-left: 4px solid #ff00ff;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+            position: relative;
+        }
+
+        /* Corner accent for info cards */
+        .info-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 20px;
+            height: 20px;
+            border-top: 2px solid #ff00ff;
+            border-right: 2px solid #ff00ff;
+        }
+
+        .info-item h3 {
+            color: #ff00ff;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            text-transform: uppercase;
+            text-shadow: 0 0 5px #ff00ff;
+        }
+
+        .info-item p {
+            color: #00ffff;
+            line-height: 1.6;
+        }
+
+        .info-item strong {
+            color: #ff00ff;
+        }
+
+        /* ===== PROJECTS SECTION ===== */
+        /* Vertical flex container for project cards */
+        .projects {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Individual project cards */
+        .project-card {
+            background: rgba(255, 0, 255, 0.05);
+            padding: 25px;
+            border: 1px solid #ff00ff;
+            position: relative;
+            transition: all 0.3s;
+            clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
+        }
+
+        /* Hover effect: slides right with glow */
+        .project-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.4);
+            background: rgba(255, 0, 255, 0.1);
+        }
+
+        .project-card h3 {
+            color: #ff00ff;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            text-shadow: 0 0 5px #ff00ff;
+        }
+
+        .project-card p {
+            color: #00ffff;
+            line-height: 1.6;
+        }
+
+        /* ===== CONTACT SECTION ===== */
+        /* Flexbox to center and wrap contact buttons */
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        /* Cyberpunk styled buttons */
+        .contact-btn {
+            background: rgba(0, 255, 255, 0.1);
+            color: #00ffff;
+            padding: 12px 30px;
+            border: 2px solid #00ffff;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            display: inline-block;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated background on hover */
+        .contact-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .contact-btn:hover::before {
+            left: 100%;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+            background: rgba(0, 255, 255, 0.2);
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        /* Tablet and Desktop: 768px and above */
+        @media (min-width: 768px) {
+            .header {
+                /* Change to horizontal layout on larger screens */
+                flex-direction: row;
+                text-align: left;
+            }
+
+            .header-text {
+                flex: 1; /* Text takes remaining space */
+            }
+        }
+
+        /* Mobile: Below 768px */
+        @media (max-width: 767px) {
+            .header {
+                text-align: center;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            /* Full width info items on mobile */
+            .info-item {
+                min-width: 100%;
+            }
+
+            /* Smaller profile image on mobile */
+            .profile-image {
+                width: 120px;
+                height: 120px;
+                font-size: 48px;
+            }
+        }
+
+        /* Small Mobile: Below 480px */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            /* Smaller skill tags on tiny screens */
+            .skill-tag {
+                font-size: 0.8em;
+                padding: 8px 15px;
+            }
+        }
+
+        /* ===== ANIMATIONS ===== */
+        /* Pulsing glow effect for certain elements */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Text glitch effect */
+        @keyframes glitch {
+            0% { text-shadow: 0 0 10px #00ffff; }
+            25% { text-shadow: -2px 0 10px #ff00ff, 2px 0 10px #00ffff; }
+            50% { text-shadow: 0 0 10px #00ffff; }
+            75% { text-shadow: 2px 0 10px #ff00ff, -2px 0 10px #00ffff; }
+            100% { text-shadow: 0 0 10px #00ffff; }
+        }
+
+        .header h1 {
+            animation: glitch 5s infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Main container centers and constrains content width -->
+    <div class="container">
+        <!-- Profile card is the main content wrapper -->
+        <div class="profile-card">
+            
+            <!-- HEADER: Contains profile image and basic info -->
+            <div class="header">
+                <!-- Profile image with initials -->
+                <div class="profile-image">JD</div>
+                
+                <!-- Header text container -->
+                <div class="header-text">
+                    <h1>Jane Doe</h1>
+                    <p>Full Stack Developer | UI/UX Enthusiast</p>
+                </div>
+            </div>
+
+            <!-- CONTENT: Main profile information -->
+            <div class="content">
+                
+                <!-- ABOUT SECTION -->
+                <div class="section">
+                    <h2>About Me</h2>
+                    <p style="color: #00ffff; line-height: 1.8;">
+                        Passionate developer with 5+ years of experience creating responsive web applications. 
+                        I love building user-friendly interfaces and solving complex problems with elegant solutions.
+                        Specialized in cyberpunk aesthetics and neon-infused designs.
+                    </p>
+                </div>
+
+                <!-- SKILLS SECTION: Uses flexbox grid for wrapping tags -->
+                <div class="section">
+                    <h2>Skills</h2>
+                    <div class="skills-grid">
+                        <span class="skill-tag">HTML & CSS</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">Responsive Design</span>
+                        <span class="skill-tag">Flexbox & Grid</span>
+                        <span class="skill-tag">UI/UX Design</span>
+                        <span class="skill-tag">Cybersecurity</span>
+                    </div>
+                </div>
+
+                <!-- EXPERIENCE SECTION: Flexible grid for info cards -->
+                <div class="section">
+                    <h2>Experience</h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <h3>Senior Developer</h3>
+                            <p><strong>NeoTech Corp</strong> | 2021 - Present<br>
+                            Leading frontend development for enterprise applications with focus on cyberpunk UI</p>
+                        </div>
+                        <div class="info-item">
+                            <h3>Web Developer</h3>
+                            <p><strong>Digital Nexus</strong> | 2019 - 2021<br>
+                            Built responsive websites with cutting-edge design trends</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROJECTS SECTION: Vertical flex container -->
+                <div class="section">
+                    <h2>Featured Projects</h2>
+                    <div class="projects">
+                        <div class="project-card">
+                            <h3>Neon Commerce Platform</h3>
+                            <p>A fully responsive shopping platform with advanced filtering and cyberpunk aesthetics. Built with React and integrated payment processing.</p>
+                        </div>
+                        <div class="project-card">
+                            <h3>Cyber Dashboard</h3>
+                            <p>An analytics dashboard with real-time data visualization featuring neon charts and holographic effects.</p>
+                        </div>
+                        <div class="project-card">
+                            <h3>Neural Network Visualizer</h3>
+                            <p>Interactive visualization tool for machine learning models with futuristic interface design.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTACT SECTION: Centered flex container for buttons -->
+                <div class="section">
+                    <h2>Get In Touch</h2>
+                    <div class="contact-links">
+                        <a href="#" class="contact-btn">Email</a>
+                        <a href="#" class="contact-btn">LinkedIn</a>
+                        <a href="#" class="contact-btn">GitHub</a>
+                        <a href="#" class="contact-btn">Portfolio</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
