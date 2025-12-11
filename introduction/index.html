@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORP_ID://USER_PROFILE</title>
+    <style>
+        /* Import a cyberpunk-style font from Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap');
+        
+        /* Root variables for consistent theming */
+        :root {
+            --neon-red: #ff0040;
+            --dark-red: #8b0000;
+            --bg-dark: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --text-primary: #e0e0e0;
+            --text-secondary: #888;
+            --grid-color: rgba(255, 0, 64, 0.1);
+        }
+        
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Animated grid background for cyberpunk atmosphere */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridScroll 20s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        /* Grid scroll animation */
+        @keyframes gridScroll {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(50px); }
+        }
+        
+        /* Scanline effect overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.5;
+        }
+        
+        /* Main container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Header section with glitch effect on hover */
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 20px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--neon-red);
+            box-shadow: 0 0 20px rgba(255, 0, 64, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Corner decorations for header */
+        .header::before,
+        .header::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--neon-red);
+        }
+        
+        .header::before {
+            top: 10px;
+            left: 10px;
+            border-right: none;
+            border-bottom: none;
+        }
+        
+        .header::after {
+            bottom: 10px;
+            right: 10px;
+            border-left: none;
+            border-top: none;
+        }
+        
+        /* Profile image with neon glow */
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid var(--neon-red);
+            box-shadow: 0 0 30px var(--neon-red), inset 0 0 20px rgba(255, 0, 64, 0.2);
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--dark-red));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-family: 'Orbitron', sans-serif;
+            transition: all 0.3s ease;
+        }
+        
+        .profile-img:hover {
+            box-shadow: 0 0 50px var(--neon-red), inset 0 0 30px rgba(255, 0, 64, 0.4);
+            transform: scale(1.05);
+        }
+        
+        /* Main title styling */
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5em;
+            color: var(--neon-red);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px var(--neon-red);
+        }
+        
+        /* Subtitle with typewriter effect */
+        .subtitle {
+            font-size: 1.2em;
+            color: var(--text-secondary);
+            letter-spacing: 2px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        /* Status indicator */
+        .status {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 20px;
+            background: rgba(255, 0, 64, 0.1);
+            border: 1px solid var(--neon-red);
+            color: var(--neon-red);
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 2px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        /* Pulsing animation for status */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        
+        /* Grid layout for content sections */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        /* Individual card styling */
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 0, 64, 0.3);
+            padding: 30px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        /* Card hover effect */
+        .card:hover {
+            border-color: var(--neon-red);
+            box-shadow: 0 0 30px rgba(255, 0, 64, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        /* Card header bar */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-red), transparent);
+        }
+        
+        /* Card title styling */
+        .card h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5em;
+            color: var(--neon-red);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        /* List styling within cards */
+        .card ul {
+            list-style: none;
+        }
+        
+        .card li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 0, 64, 0.1);
+            display: flex;
+            align-items: center;
+        }
+        
+        .card li:last-child {
+            border-bottom: none;
+        }
+        
+        /* Icon before list items */
+        .card li::before {
+            content: '▸';
+            color: var(--neon-red);
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        
+        /* Skill bars container */
+        .skill-bar {
+            margin: 15px 0;
+        }
+        
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+        
+        /* Progress bar background */
+        .progress {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 0, 64, 0.1);
+            border: 1px solid rgba(255, 0, 64, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Animated progress fill */
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--dark-red), var(--neon-red));
+            box-shadow: 0 0 10px var(--neon-red);
+            animation: fillBar 2s ease-out forwards;
+            position: relative;
+        }
+        
+        /* Animated shine effect on progress bars */
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shine 3s ease-in-out infinite;
+        }
+        
+        @keyframes fillBar {
+            from { width: 0; }
+        }
+        
+        @keyframes shine {
+            to { left: 100%; }
+        }
+        
+        /* Contact links styling */
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .contact-btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px 24px;
+            background: transparent;
+            border: 2px solid var(--neon-red);
+            color: var(--neon-red);
+            text-decoration: none;
+            text-align: center;
+            text-transform: uppercase;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Button hover effect */
+        .contact-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--neon-red);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+        
+        .contact-btn:hover::before {
+            left: 0;
+        }
+        
+        .contact-btn:hover {
+            color: var(--bg-dark);
+            box-shadow: 0 0 20px var(--neon-red);
+        }
+        
+        /* Footer styling */
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+            border-top: 1px solid rgba(255, 0, 64, 0.3);
+            color: var(--text-secondary);
+            font-size: 0.9em;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Main container for all content -->
+    <div class="container">
+        <!-- Header section with profile info -->
+        <div class="header">
+            <!-- Profile image placeholder -->
+            <div class="profile-img">◢◤</div>
+            <!-- Main name/title -->
+            <h1>JOHN SILVERHAND</h1>
+            <!-- Role/position subtitle -->
+            <p class="subtitle">NETRUNNER // CORP_AGENT_ID: #X7-9924</p>
+            <!-- Online status indicator -->
+            <div class="status">● STATUS: ONLINE</div>
+        </div>
+        
+        <!-- Grid layout for profile sections -->
+        <div class="content-grid">
+            <!-- About section -->
+            <div class="card">
+                <h2>// PROFILE_DATA</h2>
+                <p style="line-height: 1.8; color: var(--text-secondary);">
+                    Elite corporate operative specializing in network infiltration and data extraction. 
+                    15 years of experience navigating the digital landscape of Night City's most 
+                    powerful megacorporations. Authorized clearance level: OMEGA-RED.
+                </p>
+            </div>
+            
+            <!-- Skills section with animated progress bars -->
+            <div class="card">
+                <h2>// SKILL_MATRIX</h2>
+                
+                <div class="skill-bar">
+                    <div class="skill-name">
+                        <span>Network Security</span>
+                        <span>95%</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-fill" style="width: 95%;"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-bar">
+                    <div class="skill-name">
+                        <span>Data Extraction</span>
+                        <span>88%</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-fill" style="width: 88%;"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-bar">
+                    <div class="skill-name">
+                        <span>ICE Breaking</span>
+                        <span>92%</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-fill" style="width: 92%;"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-bar">
+                    <div class="skill-name">
+                        <span>Cyberware Integration</span>
+                        <span>85%</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-fill" style="width: 85%;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Experience section -->
+            <div class="card">
+                <h2>// CORP_HISTORY</h2>
+                <ul>
+                    <li>Senior NetRunner - Arasaka Corp (2020-2025)</li>
+                    <li>Security Specialist - Militech (2018-2020)</li>
+                    <li>Junior Analyst - Kang Tao (2016-2018)</li>
+                    <li>Field Agent - Zetatech (2014-2016)</li>
+                </ul>
+            </div>
+            
+            <!-- Certifications section -->
+            <div class="card">
+                <h2>// CREDENTIALS</h2>
+                <ul>
+                    <li>Certified Ethical Hacker (CEH)</li>
+                    <li>Offensive Security Certified Professional</li>
+                    <li>Neural Interface Specialist Level 5</li>
+                    <li>Corporate Espionage Clearance Alpha</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Full-width contact card -->
+        <div class="card">
+            <h2>// ESTABLISH_CONNECTION</h2>
+            <div class="contact-links">
+                <a href="#" class="contact-btn">Secure_Mail</a>
+                <a href="#" class="contact-btn">Neural_Link</a>
+                <a href="#" class="contact-btn">Corp_Network</a>
+                <a href="#" class="contact-btn">Data_Drop</a>
+            </div>
+        </div>
+        
+        <!-- Footer with copyright info -->
+        <footer>
+            © 2077 CYBERCORP INDUSTRIES // ALL RIGHTS RESERVED // UNAUTHORIZED ACCESS WILL BE PROSECUTED
+        </footer>
+    </div>
+</body>
+</html>
